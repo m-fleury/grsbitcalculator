@@ -844,7 +844,6 @@ function exp_plus(num){
 		}
 	}
 	if (carry == 1) {
-        overflow();
 		alert("Die Zahl ist nicht darstellbar")
 	}
     document.getElementById("overflow").className = "nothidden";
@@ -1043,14 +1042,25 @@ function decider_add(num1,num2,num3){
     }
     else if((high == 0 || high == 2)&& config == 2){
         sub_add = 0;
+        exp_sub = exp1- exp2;
+        take_fract_1(num1,num2,exp_sub);//Die fractions in die Tabelle schreiben
         document.getElementById("vorzeichen").innerHTML = "+";
         add(num1,num2,num3);
         return;
     }
     else if(high == 1 && config == 2){
-        sub_add = 1;
-        document.getElementById("vorzeichen").innerHTML = "+";
-        add_float(num1,num2,num3);
+        sub_add = 0;
+        num3[0] = 0;
+        for (let i = 1; i <= num_frac; i++){
+            num3[i] = 0;
+            nicer = 2;//denormalized Number
+        }
+        exp_sub = exp1- exp2;
+        take_fract_1(num1,num2,exp_sub);//Die fractions in die Tabelle schreiben
+        document.getElementById("vorzeichen").innerHTML = "-";
+        print_exp();
+        take_fract_2(num3)
+        return;
     }
 }
 
@@ -1121,11 +1131,14 @@ function decider_sub(num1,num2,num3){
         }
     }
     else if((high == 0 || high == 2)&& config == 2){
-        num3[0] = num1[0];
+        sub_add = 0;
+        document.getElementById("vorzeichen").innerHTML = "-";
+        num3[0] = 0;
         for (let i = 1; i <= num_frac; i++){
             num3[i] = 0;
             nicer = 2;//denormalized Number
         }
+        exp_sub = exp1- exp2;
         take_fract_1(num1,num2,exp_sub);//Die fractions in die Tabelle schreiben
         print_exp();
         take_fract_2(num3)
@@ -1134,6 +1147,7 @@ function decider_sub(num1,num2,num3){
     else if(high == 1 && config == 2){
         sub_add = 0;
         document.getElementById("vorzeichen").innerHTML = "+";
+        exp_sub = exp1- exp2;
         take_fract_1(num1,num2,exp_sub);//Die fractions in die Tabelle schreiben
         print_exp();
         add(num1,num2,num3);
