@@ -1403,7 +1403,7 @@ function take_fract_1(numm1,numm2, exp_sub){
         if (i < num_exp + 4){
             document.getElementById("calcfrac01" + offset).className = "fract";
         }
-        if (i > num_exp + exp_sub && i < num_exp + exp_sub + 5){
+        if (i > num_exp + exp_sub && i < num_exp + exp_sub + 4){
             document.getElementById("calcfrac02" + offset).className = "fract";
         }
         if (i == num_exp + exp_sub && exp_sub != 0){
