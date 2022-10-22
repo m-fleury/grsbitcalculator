@@ -684,8 +684,21 @@ function showContent() {
     }
 }
 
+//calc sticky
+function calc_sticky(num){
+    let len_num = num.length;
+    let cnt = num_frac + 4;
+    while (cnt < len_num){
+        if(num[cnt]){
+            num[num_frac + 3] = 1;
+        }
+        cnt++;
+    }
+}
+
 //Berechnet ob auf/abgerundet wird
 function calc_round(num){
+    calc_sticky(num);
 	if (num[num_frac + 1]) {
 		if (num[num_frac + 2] || num[num_frac + 3]) { 
 			num = round_up(num);
@@ -839,6 +852,7 @@ function round_num(num){
     num.push(0);
     num.push(0);
     num.push(0);
+    let cnt = num_frac + 7;
     let len8 = num.length;
     if (num[num_frac + 4]) {
 		if (num[num_frac + 5] || num[num_frac + 6]) { 
@@ -851,6 +865,13 @@ function round_num(num){
             else if(num[num_frac + 3] == 0){
             }
 		}
+    } else {
+        while (cnt < len8){
+            if(num[cnt]){
+                num[num_frac + 3] = 1;
+            }
+            cnt++;
+        }
     }
     while ( len8 > num_frac + 4){
         num.pop();

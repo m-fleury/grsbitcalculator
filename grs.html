@@ -40,8 +40,8 @@
   zur Verfügung steht. Um sie dennoch darzustellen, müssen die Zahlen gerundet werden.
   In der floating-point Arithmetik wird als Defaultwert "<a href="https://en.wikipedia.org/wiki/Rounding">round to nearest, ties to even</a>" 
   verwendet. Um zu runden werden neben den normale Bits der Mantissa drei weitere Bits 
-  benöigt. Das Guard, das Round und das Sticky Bit. Sie sind die drei Bits, die direkt 
-  auf das letzte gespeicherte Bit folgen.
+  benöigt. Das Guard, das Round und das Sticky Bit. Das Guard und das Round Bit folgen direkt auf das letzte gespeicherte Bit.
+  Das Sticky Bit ist ein OR für die restlichen Bits, die entfernt werden.
   <br>
   <br>
   <h3>Aufrunden</h3>
