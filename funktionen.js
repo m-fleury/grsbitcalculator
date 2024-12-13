@@ -158,7 +158,7 @@ function sub_float(num1, num2, num3) {
 	extend(num1, num2, num3);//Zahlen auf die gleiche Länge bringen
 	len = num1.length;
 
-	//Exxponenten übernehmen
+	//Exponenten übernehmen
 	adapt_exp(num1, num2, num3);
 	//Zahl kopieren damit man die 1 vorm . bekommt
 	for (let f = 0; f < len; f++) {
@@ -846,35 +846,23 @@ function adapt_val(num2, diff) {
 			num2.splice(num_exp + 1, 0, 0);
 		}
 	}
-	round_num(num2);
+        calc_sticky(num2);
+	remove_extra_bits(num2);
 	return num2;
 }
 
 //runden auf 6 bits
-function round_num(num) {
+function remove_extra_bits(num) {
 	num.push(0);
 	num.push(0);
 	num.push(0);
 	let cnt = num_frac + 7;
 	let len8 = num.length;
-	if (num[num_frac + 4]) {
-		if (num[num_frac + 5] || num[num_frac + 6]) {
-			num = round_upper(num);
+	while (cnt < len8) {
+		if (num[cnt]) {
+			num[num_frac + 3] = 1;
 		}
-		else {
-			if (num[num_frac + 3]) {
-				num = round_upper(num);
-			}
-			else if (num[num_frac + 3] == 0) {
-			}
-		}
-	} else {
-		while (cnt < len8) {
-			if (num[cnt]) {
-				num[num_frac + 3] = 1;
-			}
-			cnt++;
-		}
+		cnt++;
 	}
 	while (len8 > num_frac + 4) {
 		num.pop();
@@ -1087,6 +1075,8 @@ function adapt_exp(num1, num2, num3) {
 }
 
 //bestimmt ob addiert oder subtrahiert werden muss
+// num1, num2: input_numbers
+// num3: result
 function decider_add(num1, num2, num3) {
 	high = 0;
 
