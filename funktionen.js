@@ -730,32 +730,48 @@ function calc_sticky(num) {
 	}
 }
 
+
+const rounding_translations = {
+    "de" : {
+	"round_up": "Das Guard Bit ist eine Eins und das Round und/ oder Sticky Bit" +
+	    " sind eine Eins. Das führt dazu das aufgerundet wird.",
+	"round_down": "Das Guard Bit ist eine Null. In diesem Fall ist es nicht relevant, was" +
+	    " für einen Wert das Round und Sticky Bit besitzen, es wird immer abgerundet.",
+	"round_to_even_up": "Das Guard Bit ist eine Eins, aber das Round und Sticky Bit sind Null." +
+	    " Ob ab- oder aufgerundet wird entscheidet das letzte Fraction Bit. Ist es eine Eins wird aufgerundet," +
+	    " ist es eine Null wird abgerundet. In diesem Fall ist es eine Eins und es wird aufgerundet.",
+	"round_to_even_down": "Das Guard Bit ist eine Eins, aber das Round und Sticky Bit sind Null." +
+	    " Ob ab- oder aufgerundet wird entscheidet das letzte Fraction Bit. Ist es eine Eins wird aufgerundet," +
+	    " ist es eine Null wird abgerundet. In diesem Fall ist es eine Null und es wird abgerundet.",
+    },
+    "en" : {
+	"round_up": "The Guard Bit is a one and the Round and/or Sticky Bit is a one. This leads to rounding up.",
+	"round_down": "The Guard Bit is a zero. In this case, it is irrelevant what value the Round and Sticky Bit have; it is always rounded down.",
+	"round_to_even_up": "The Guard Bit is a one, but the Round and Sticky Bit are zeros. Whether to round up or down is decided by the last Fraction Bit. If it is a one, it rounds up; if it is a zero, it rounds down. In this case, it is a one and it rounds up.",
+	"round_to_even_down": "The Guard Bit is a one, but the Round and Sticky Bit are zeros. Whether to round up or down is decided by the last Fraction Bit. If it is a one, it rounds up; if it is a zero, it rounds down. In this case, it is a zero and it rounds down.",
+    }
+}
+
 //Berechnet ob auf/abgerundet wird
 function calc_round(num) {
 	calc_sticky(num);
 	if (num[num_frac + 1]) {
 		if (num[num_frac + 2] || num[num_frac + 3]) {
 			num = round_up(num);
-			document.getElementById("grstext").innerHTML = "Das Guard Bit ist eine Eins und das Round und/ oder Sticky Bit" +
-				" sind eine Eins. Das führt dazu das aufgerundet wird.";
+		    document.getElementById("grstext").innerHTML = rounding_translations[locale]["round_up"];
 		}
 		else {
 			if (num[num_frac]) {
 				num = round_up(num);
-				document.getElementById("grstext").innerHTML = "Das Guard Bit ist eine Eins, aber das Round und Sticky Bit sind Null." +
-					" Ob ab- oder aufgerundet wird entscheidet das letzte Fraction Bit. Ist es eine Eins wird aufgerundet," +
-					" ist es eine Null wird abgerundet. In diesem Fall ist es eine Eins und es wird aufgerundet.";
+			    document.getElementById("grstext").innerHTML = rounding_translations[locale]["round_to_even_up"];
 			}
 			else if (num[num_frac] == 0) {
-				document.getElementById("grstext").innerHTML = "Das Guard Bit ist eine Eins, aber das Round und Sticky Bit sind Null." +
-					" Ob ab- oder aufgerundet wird entscheidet das letzte Fraction Bit. Ist es eine Eins wird aufgerundet," +
-					" ist es eine Null wird abgerundet. In diesem Fall ist es eine Null und es wird abgerundet.";
+				document.getElementById("grstext").innerHTML = ML = rounding_translations[locale]["round_to_even_down"];
 			}
 		}
 
 	} else {
-		document.getElementById("grstext").innerHTML = "Das Guard Bit ist eine Null. In diesem Fall ist es nicht relevant, was" +
-			" für einen Wert das Round und Sticky Bit besitzen, es wird immer abgerundet.";
+		document.getElementById("grstext").innerHTML = rounding_translations[locale]["round_down"];
 	}
 }
 
@@ -928,6 +944,27 @@ function round_upper(num) {
 	return num;
 }
 
+
+const renormalize_translation = {
+    "de": {
+	"underflow":
+	    "Durch die Rechnung kam es dazu,dass das extra Bit nicht mehr den Wert 1," +
+		" sondern den Wert 0 besitzt. Um wieder eine 1 zu bekommen muss die Mantissa nach links verschoben werden." +
+		" Bei jedem Bitshift wird der Exponent um eins verringert.",
+	"overflow": "Durch die Rechnung kam es zu einem Overflow der Fraction Bits." +
+	    " Um den Overflow zu korrigiern, wir der Exponent erhöht und die Fraction Bits nach rechts verschoben"
+    },
+    "en": {
+	"underflow":
+	    "Due to the calculation, the extra bit no longer has the value 1 but instead has the value 0. " +
+		"To get a 1 again, the mantissa must be shifted to the left. " +
+		"With each bit shift, the exponent is reduced by one.",
+	"overflow":
+	    "The calculation resulted in an overflow of the fraction bits. " +
+		"To correct the overflow, the exponent was increased and the fraction bits were shifted to the right."
+    }
+}
+
 //Exponenten um eins erhöhen
 function exp_plus(num) {
 	overflowe = 1;
@@ -956,8 +993,7 @@ function exp_plus(num) {
 		alert("Die Zahl ist nicht darstellbar")
 	}
 	document.getElementById("overflow").className = "nothidden";
-	document.getElementById("overflow").innerHTML = "Durch die Rechnung kam es zu einem Overflow der Fraction Bits." +
-		" Um den Overflow zu korrigiern, wir der Exponent erhöht und die Fraction Bits nach rechts verschoben";
+	document.getElementById("overflow").innerHTML = renormalize_translation[locale]["overflow"];
 }
 
 //Länge anpassen
@@ -1076,9 +1112,7 @@ function exp_min(num) {
 	num[0] = sign;
 	underflowe = 1;
 	document.getElementById("overflow").className = "nothidden";
-	document.getElementById("overflow").innerHTML = "Durch die Rechnung kam es dazu,dass das extra Bit nicht mehr den Wert 1," +
-		" sondern den Wert 0 besitzt. Um wieder eine 1 zu bekommen muss die Mantissa nach links verschoben werden." +
-		" Bei jedem Bitshift wird der Exponent um eins verringert.";
+	document.getElementById("overflow").innerHTML = renormalize_translation[locale]["underflow"];
 	return num;
 }
 
