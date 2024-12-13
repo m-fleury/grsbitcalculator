@@ -719,7 +719,6 @@ function showContent() {
 
 //calc sticky
 function calc_sticky(num) {
-	alert("calculating sticky in num:" + num)
 
 	let len_num = num.length;
 	let cnt = num_frac + 4;
@@ -729,7 +728,6 @@ function calc_sticky(num) {
 		}
 		cnt++;
 	}
-	alert("after sticky in num:" + num)
 }
 
 //Berechnet ob auf/abgerundet wird
@@ -866,7 +864,6 @@ function calc_basics(num1, num2) {
 //Die Mantissa wird verschoben, sodass die Zahlen den gleichen Expo haben
 function adapt_val(num2, diff) {
 
-	alert("adapting num2:" + num2)
 	let nicer4 = special_one(num2);
 	if (diff == 0) {
 		return num2;
