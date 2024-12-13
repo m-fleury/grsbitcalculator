@@ -1,3 +1,4 @@
+const locale = "de";
 let richtig = 0;
 let num1 = [];
 let num2 = [];
@@ -374,49 +375,81 @@ function print_table_early(num1, num2) {
 	}
 }
 
+
+
+const denormal_translations = {
+    "de" : {
+	"find_and_second_denormal": "Bei der ersten und zweiten Zahl handelt es sich um <b>denormalized Numbers </b>." +
+			" Das bedeutet es sind kleine Zahlen, bei denen es keine extra Eins bei den Mantissa Bits gibt." +
+	    " Das extra Bit ist hier eine Null. Denormalized Numbers werden durch einen Exponenten dargestellt der nur aus Nullen besteht.",
+	"only_first_denormal": "Bei der ersten Zahl handelt es sich um eine <b>denormalized Number </b>" +
+			" Das bedeutet es ist eine kleine Zahl, bei ihr gibt es keine extra Eins in den Mantissa Bits." +
+	    " Das extra Bit ist hier eine Null. Denormalized Numbers werden durch einen Exponenten dargestellt der nur aus Nullen besteht.",
+	"only_second_denormal": "Bei der zweiten Zahl handelt es sich um eine <b>denormalized Number </b>" +
+			" Das bedeutet es ist eine kleine Zahl, bei ihr gibt es keine extra Eins in den Mantissa Bits." +
+			" Das extra Bit ist hier eine Null. Denormalized Numbers werden durch einen Exponenten dargestellt der nur aus Nullen besteht."
+    },
+    "en": {
+	"find_and_second_denormal": "The first and second numbers are <b>denormalized Numbers</b>. This means they are small numbers, with no leading one in the mantissa bits. The extra bit is a zero. Denormalized Numbers are represented by an exponent consisting only of zeros.",
+	"only_first_denormal": "The first number is a <b>denormalized Number</b>. This means it is a small number, with no leading one in the mantissa bits. The extra bit is a zero. Denormalized Numbers are represented by an exponent consisting only of zeros.",
+	"only_second_denormal": "The second number is a <b>denormalized Number</b>. This means it is a small number, with no leading one in the mantissa bits. The extra bit is a zero. Denormalized Numbers are represented by an exponent consisting only of zeros."
+    }, 
+}
+
 //Text für denormalized numbers wird hinzugefügt
 function print_extra_denormal() {
 	if (nicer == 2 && nicer2 == 2) {
-		document.getElementById("denormalizedtext").innerHTML = "Bei der ersten und zweiten Zahl handelt es sich um <b>denormalized Numbers </b>." +
-			" Das bedeutet es sind kleine Zahlen, bei denen es keine extra Eins bei den Mantissa Bits gibt." +
-			" Das extra Bit ist hier eine Null. Denormalized Numbers werden durch einen Exponenten dargestellt der nur aus Nullen besteht.";
+	    document.getElementById("denormalizedtext").innerHTML = denormal_translations[locale]["find_and_second_denormal"];
 	}
 	else if (nicer == 2 && nicer2 != 2) {
-		document.getElementById("denormalizedtext").innerHTML = "Bei der ersten Zahl handelt es sich um eine <b>denormalized Number </b>" +
-			" Das bedeutet es ist eine kleine Zahl, bei ihr gibt es keine extra Eins in dne Mantissa Bits." +
-			" Das extra Bit ist hier eine Null. Denormalized Numbers werden durch einen Exponenten dargestellt der nur aus Nullen besteht.";
+		document.getElementById("denormalizedtext").innerHTML = denormal_translations[locale]["only_first_denormal"];
 	}
 	else if (nicer != 2 && nicer2 == 2) {
-		document.getElementById("denormalizedtext").innerHTML = "Bei der zweiten Zahl handelt es sich um eine <b>denormalized Number </b>" +
-			" Das bedeutet es ist eine kleine Zahl, bei ihr gibt es keine extra Eins in dne Mantissa Bits." +
-			" Das extra Bit ist hier eine Null. Denormalized Numbers werden durch einen Exponenten dargestellt der nur aus Nullen besteht.";
+		document.getElementById("denormalizedtext").innerHTML = denormal_translations[locale]["only_second_denormal"];
 	}
 }
 
 
+
+const infinity_nan_translations = {
+    "de" : {
+	"first_infinite": "Bei der ersten Zahl handelt es sich um die Darstellung" +
+			" von <b>Unendlich</b>. Inf wird durch nur Einsen im Exponenten und nur Nullen in den Fraction Bits dargesetllt. " +
+			" Abhängig vom Vorzeichenbit, kann +Inf und -Inf dargestellt werden." +
+			" Wie in der normalen Mathematik gilt auch hier Inf + eine Zahl ergibt Inf, weshalb kein weiterer Rechenweg benötigt wird.",
+	"second_infinite": "Bei der zweiten Zahl handelt es sich um die Darstellung" +
+			" von <b>Unendlich</b>. Inf wird durch nur Einsen im Exponenten und nur Nullen in den Fraction Bits dargesetllt. " +
+			" Abhängig vom Vorzeichenbit, kann +Inf und -Inf dargestellt werden." +
+		" Wie in der normalen Mathematik gilt auch hier Inf + eine Zahl ergibt Inf, weshalb kein weiterer Rechenweg benötigt wird.",
+	"first_nan": "Bei der zweiten Zahl handelt es sich um <b>NaN</b> (not a Number)" +
+			" NaN wird beispielsweise dafür verwendet, zu zeigen das die Rechnung nicht erfolgreich war, bei zum Bespiel einem Overflow." +
+	    " NaN wird durch nur Einsen im Exponenten und durch mindestens eine Eins in den Fraction Bits dargestellt.",
+	"second_nan": "Bei der ersten Zahl handelt es sich um <b>NaN</b> (not a Number)" +
+			" NaN wird beispielsweise dafür verwendet, zu zeigen das die Rechnung nicht erfolgreich war, bei zum Bespiel einem Overflow." +
+	    " NaN wird durch nur Einsen im Exponenten und durch mindestens eine Eins in den Fraction Bits dargestellt.",
+
+    },
+    "en": {
+	"first_infinite": "The first number is the representation of <b>Infinity</b>. Inf is represented by all ones in the exponent and all zeros in the fraction bits. Depending on the sign bit, both +Inf and -Inf can be represented. As in normal mathematics, here Inf + a number results in Inf, so no further calculation is needed.",
+	"second_infinite": "The second number is the representation of <b>Infinity</b>. Inf is represented by all ones in the exponent and all zeros in the fraction bits. Depending on the sign bit, both +Inf and -Inf can be represented. As in normal mathematics, here Inf + a number results in Inf, so no further calculation is needed.",
+	"first_nan": "The second number is <b>NaN</b> (Not a Number). NaN is, for example, used to indicate that the calculation was unsuccessful, such as in an Overflow. NaN is represented by all ones in the exponent and at least one one in the fraction bits.",
+	"second_nan": "The first number is <b>NaN</b> (Not a Number). NaN is, for example, used to indicate that the calculation was unsuccessful, such as in an Overflow. NaN is represented by all ones in the exponent and at least one one in the fraction bits.",
+    },
+}
+
 //Text für inf hinzufügen
 function print_table_inf() {
 	if (nicer == 3) {
-		document.getElementById("tabbfloat8special").innerHTML = "Bei der ersten Zahl handelt es sich um die Darstellung" +
-			" von <b>Unendlich</b>. Inf wird durch nur Einsen im Exponenten und nur Nullen in den Fraction Bits dargesetllt. " +
-			" Abhängig vom Vorzeichenbit, kann +Inf und -Inf dargestellt werden." +
-			" Wie in der normalen Mathematik gilt auch hier Inf + eine Zahl ergibt Inf, weshalb kein weiterer Rechenweg benötigt wird.";
+		document.getElementById("tabbfloat8special").innerHTML = infinity_nan_translations[locale]["first_infinite"];
 	}
 	else if (nicer2 == 3) {
-		document.getElementById("tabbfloat8special").innerHTML = "Bei der zweiten Zahl handelt es sich um die Darstellung" +
-			" von <b>Unendlich</b>. Inf wird durch nur Einsen im Exponenten und nur Nullen in den Fraction Bits dargesetllt. " +
-			" Abhängig vom Vorzeichenbit, kann +Inf und -Inf dargestellt werden."
-		" Wie in der normalen Mathematik gilt auch hier Inf + eine Zahl ergibt Inf, weshalb kein weiterer Rechenweg benötigt wird.";
+		document.getElementById("tabbfloat8special").innerHTML = infinity_nan_translations[locale]["second_infinite"];
 	}
 	else if (nicer2 == 4) {
-		document.getElementById("tabbfloat8special").innerHTML = "Bei der zweiten Zahl handelt es sich um <b>NaN</b> (not a Number)" +
-			" NaN wird beispielsweise dafür verwendet, zu zeigen das die Rechnung nicht erfolgreich war, bei zum Bespiel einem Overflow." +
-			" NaN wird durch nur Einsen im Exponenten und durch mindestens eine Eins in den Fraction Bits dargestellt.";
+		document.getElementById("tabbfloat8special").innerHTML = infinity_nan_translations[locale]["first_nan"];
 	}
 	else if (nicer == 4) {
-		document.getElementById("tabbfloat8special").innerHTML = "Bei der ersten Zahl handelt es sich um <b>NaN</b> (not a Number)" +
-			" NaN wird wird beispielsweise dafür verwendet, zu zeigen das die Rechnung nicht erfolgreich war, bei zum Bespiel einem Overflow." +
-			" NaN wird durch nur Einsen im Exponenten und durch mindestens eine Eins in den Fraction Bits dargestellt.";
+		document.getElementById("tabbfloat8special").innerHTML = infinity_nan_translations[locale]["second_nan"];
 	}
 }
 
@@ -686,7 +719,7 @@ function showContent() {
 
 //calc sticky
 function calc_sticky(num) {
-    //	alert("calculating sticky in num:" + num)
+	alert("calculating sticky in num:" + num)
 
 	let len_num = num.length;
 	let cnt = num_frac + 4;
@@ -696,7 +729,7 @@ function calc_sticky(num) {
 		}
 		cnt++;
 	}
-    //	alert("after sticky in num:" + num)
+	alert("after sticky in num:" + num)
 }
 
 //Berechnet ob auf/abgerundet wird
@@ -832,6 +865,8 @@ function calc_basics(num1, num2) {
 
 //Die Mantissa wird verschoben, sodass die Zahlen den gleichen Expo haben
 function adapt_val(num2, diff) {
+
+	alert("adapting num2:" + num2)
 	let nicer4 = special_one(num2);
 	if (diff == 0) {
 		return num2;
